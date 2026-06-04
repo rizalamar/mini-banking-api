@@ -1,18 +1,13 @@
 package com.rizalamar.minibankingapi.security;
 
 import com.rizalamar.minibankingapi.domain.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-@RequiredArgsConstructor
-public class SecurityUser implements UserDetails {
-
-    private final User user;
+public record SecurityUser(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -49,7 +44,4 @@ public class SecurityUser implements UserDetails {
         return user.isActive();
     }
 
-    public User getUser(){
-        return user;
-    }
 }
