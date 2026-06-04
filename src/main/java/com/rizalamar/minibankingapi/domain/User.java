@@ -2,16 +2,14 @@ package com.rizalamar.minibankingapi.domain;
 
 import com.rizalamar.minibankingapi.domain.common.AbstractAuditingEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,7 +26,7 @@ public class User extends AbstractAuditingEntity {
     private String password;
 
     @Column(nullable = false)
-    private String fullname;
+    private String fullName;
 
     @Builder.Default
     private boolean isActive = true;
