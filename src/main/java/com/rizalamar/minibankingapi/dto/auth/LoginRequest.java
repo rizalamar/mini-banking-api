@@ -1,4 +1,4 @@
-package com.rizalamar.minibankingapi.model.auth;
+package com.rizalamar.minibankingapi.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
