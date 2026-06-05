@@ -21,7 +21,7 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -29,6 +29,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
+            return;
         }
 
         final String jwt = authHeader.substring(7);
@@ -37,6 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // jika email ada dan user belum terautentikasi di context
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+            System.out.println(userDetails);
 
             // validasi token terhadap user dari database
             boolean validateToken = jwtUtil.validateToken(jwt, userDetails);
