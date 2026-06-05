@@ -26,7 +26,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String genenateToken(String email){
+    public String generateToken(String email){
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(new Date(System.currentTimeMillis()))
