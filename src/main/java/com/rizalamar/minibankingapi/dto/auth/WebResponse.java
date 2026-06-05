@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class WebResponse<T> {
     private int code;
     private String status;
-    private T message;
+    private T data;
+    private String message;
     private LocalDateTime timestamp;
 }

@@ -16,8 +16,9 @@ public class ErrorController {
     public ResponseEntity<WebResponse<String>> constraintViolationException(ConstraintViolationException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(WebResponse.<String>builder()
-                        .code(HttpStatus.BAD_GATEWAY.value())
+                        .code(HttpStatus.BAD_REQUEST.value())
                         .status("BAD REQUEST")
+                        .data(null)
                         .message(exception.getMessage())
                         .timestamp(LocalDateTime.now())
                         .build());
@@ -29,6 +30,7 @@ public class ErrorController {
                 .body(WebResponse.<String>builder()
                         .code(exception.getStatusCode().value())
                         .status(exception.getStatusCode().toString())
+                        .data(null)
                         .message(exception.getReason())
                         .timestamp(LocalDateTime.now())
                         .build());
