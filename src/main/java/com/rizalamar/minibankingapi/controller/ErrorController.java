@@ -1,6 +1,6 @@
 package com.rizalamar.minibankingapi.controller;
 
-import com.rizalamar.minibankingapi.dto.auth.WebResponse;
+import com.rizalamar.minibankingapi.dto.WebResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +41,8 @@ public class ErrorController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(WebResponse.<String>builder()
                         .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .status("INTERNAL STATUS ERROR")
+                        .status("INTERNAL SERVER ERROR")
+                        .data(null)
                         .message("An unexpected error occured: " + exception.getMessage())
                         .timestamp(LocalDateTime.now())
                         .build());

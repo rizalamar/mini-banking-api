@@ -3,7 +3,7 @@ package com.rizalamar.minibankingapi.controller;
 import com.rizalamar.minibankingapi.dto.auth.AuthResponse;
 import com.rizalamar.minibankingapi.dto.auth.LoginRequest;
 import com.rizalamar.minibankingapi.dto.auth.RegisterRequest;
-import com.rizalamar.minibankingapi.dto.auth.WebResponse;
+import com.rizalamar.minibankingapi.dto.WebResponse;
 import com.rizalamar.minibankingapi.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,14 +27,14 @@ public class AuthController {
         AuthResponse register = authService.register(request);
 
         WebResponse<AuthResponse> response = WebResponse.<AuthResponse>builder()
-                .code(HttpStatus.OK.value())
-                .status("OK")
+                .code(HttpStatus.CREATED.value())
+                .status("CREATED")
                 .data(register)
                 .message("User registered successfully")
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)

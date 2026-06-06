@@ -1,4 +1,4 @@
-package com.rizalamar.minibankingapi.dto.auth;
+package com.rizalamar.minibankingapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
