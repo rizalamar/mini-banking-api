@@ -1,0 +1,41 @@
+package com.rizalamar.minibankingapi.service;
+
+import com.rizalamar.minibankingapi.domain.User;
+import com.rizalamar.minibankingapi.dto.WebResponse;
+import com.rizalamar.minibankingapi.dto.user.UserResponse;
+import com.rizalamar.minibankingapi.repository.UserRepository;
+import com.rizalamar.minibankingapi.security.CurrentUser;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    private final UserRepository userRepository;
+    private final ValidationService validationService;
+
+    public UserResponse toUserResponse(User user){
+        return UserResponse.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole().name())
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse getMyProfile(User user){
+        return toUserResponse(user);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserResponse> getAllUsers(){
+        return userRepository.findAll().stream()
+                .map(this::toUserResponse)
+                .toList();
+    }
+}
