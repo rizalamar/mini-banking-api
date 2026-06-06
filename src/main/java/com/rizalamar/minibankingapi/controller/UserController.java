@@ -2,15 +2,15 @@ package com.rizalamar.minibankingapi.controller;
 
 import com.rizalamar.minibankingapi.domain.User;
 import com.rizalamar.minibankingapi.dto.WebResponse;
+import com.rizalamar.minibankingapi.dto.user.UpdateUserRequest;
 import com.rizalamar.minibankingapi.dto.user.UserResponse;
 import com.rizalamar.minibankingapi.security.CurrentUser;
 import com.rizalamar.minibankingapi.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,6 +43,22 @@ public class UserController {
                 .status("OK")
                 .data(userResponses)
                 .message("All users retrieve successfully")
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @PutMapping("/me")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
+    public WebResponse<UserResponse> updateProfile(
+            @CurrentUser User user,
+            @Valid @RequestBody UpdateUserRequest request
+            ) {
+        UserResponse userResponse = userService.updateProfile(user, request);
+        return WebResponse.<UserResponse>builder()
+                .code(HttpStatus.OK.value())
+                .status("OK")
+                .data(userResponse)
+                .message("Full name is updated successfully")
                 .timestamp(LocalDateTime.now())
                 .build();
     }

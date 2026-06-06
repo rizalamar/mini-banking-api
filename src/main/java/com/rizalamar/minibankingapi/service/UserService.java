@@ -2,6 +2,7 @@ package com.rizalamar.minibankingapi.service;
 
 import com.rizalamar.minibankingapi.domain.User;
 import com.rizalamar.minibankingapi.dto.WebResponse;
+import com.rizalamar.minibankingapi.dto.user.UpdateUserRequest;
 import com.rizalamar.minibankingapi.dto.user.UserResponse;
 import com.rizalamar.minibankingapi.repository.UserRepository;
 import com.rizalamar.minibankingapi.security.CurrentUser;
@@ -37,5 +38,12 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(this::toUserResponse)
                 .toList();
+    }
+
+    @Transactional
+    public UserResponse updateProfile(User currentUser, UpdateUserRequest request){
+        currentUser.setFullName(request.getFullName());
+        User updatedUser = userRepository.save(currentUser);
+        return toUserResponse(updatedUser);
     }
 }
