@@ -28,6 +28,9 @@ public class User extends AbstractAuditingEntity {
     @Column(nullable = false)
     private String fullName;
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.CUSTOMER;
+
     @Builder.Default
     private boolean isActive = true;
 }
