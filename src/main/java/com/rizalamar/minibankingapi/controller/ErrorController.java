@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
@@ -32,6 +33,18 @@ public class ErrorController {
                         .status(exception.getStatusCode().toString())
                         .data(null)
                         .message(exception.getReason())
+                        .timestamp(LocalDateTime.now())
+                        .build());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<WebResponse<String>> accessDeniedException (AccessDeniedException exception){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(WebResponse.<String>builder()
+                        .code(HttpStatus.FORBIDDEN.value())
+                        .status("FORBIDDEN")
+                        .data(null)
+                        .message("You do not have permission to access this resource")
                         .timestamp(LocalDateTime.now())
                         .build());
     }
