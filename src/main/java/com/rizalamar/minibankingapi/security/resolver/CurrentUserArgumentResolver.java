@@ -1,6 +1,8 @@
-package com.rizalamar.minibankingapi.security;
+package com.rizalamar.minibankingapi.security.resolver;
 
 import com.rizalamar.minibankingapi.domain.User;
+import com.rizalamar.minibankingapi.security.SecurityUser;
+import com.rizalamar.minibankingapi.security.annotation.CurrentUser;
 import org.jspecify.annotations.Nullable;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;

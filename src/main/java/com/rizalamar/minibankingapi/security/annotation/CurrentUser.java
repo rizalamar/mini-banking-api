@@ -1,4 +1,4 @@
-package com.rizalamar.minibankingapi.security;
+package com.rizalamar.minibankingapi.security.annotation;
 
 import java.lang.annotation.*;
 

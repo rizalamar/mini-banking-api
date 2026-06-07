@@ -4,7 +4,7 @@ import com.rizalamar.minibankingapi.domain.User;
 import com.rizalamar.minibankingapi.dto.WebResponse;
 import com.rizalamar.minibankingapi.dto.user.UpdateUserRequest;
 import com.rizalamar.minibankingapi.dto.user.UserResponse;
-import com.rizalamar.minibankingapi.security.CurrentUser;
+import com.rizalamar.minibankingapi.security.annotation.CurrentUser;
 import com.rizalamar.minibankingapi.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

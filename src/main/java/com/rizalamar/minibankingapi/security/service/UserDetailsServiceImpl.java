@@ -1,6 +1,7 @@
-package com.rizalamar.minibankingapi.security;
+package com.rizalamar.minibankingapi.security.service;
 
 import com.rizalamar.minibankingapi.repository.UserRepository;
+import com.rizalamar.minibankingapi.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

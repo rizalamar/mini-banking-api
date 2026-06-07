@@ -5,7 +5,7 @@ import com.rizalamar.minibankingapi.dto.auth.AuthResponse;
 import com.rizalamar.minibankingapi.dto.auth.LoginRequest;
 import com.rizalamar.minibankingapi.dto.auth.RegisterRequest;
 import com.rizalamar.minibankingapi.repository.UserRepository;
-import com.rizalamar.minibankingapi.security.JwtUtil;
+import com.rizalamar.minibankingapi.security.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

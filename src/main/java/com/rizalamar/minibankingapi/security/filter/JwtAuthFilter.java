@@ -1,5 +1,6 @@
-package com.rizalamar.minibankingapi.security;
+package com.rizalamar.minibankingapi.security.filter;
 
+import com.rizalamar.minibankingapi.security.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

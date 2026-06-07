@@ -1,17 +1,14 @@
 package com.rizalamar.minibankingapi.service;
 
 import com.rizalamar.minibankingapi.domain.User;
-import com.rizalamar.minibankingapi.dto.WebResponse;
 import com.rizalamar.minibankingapi.dto.user.UpdateUserRequest;
 import com.rizalamar.minibankingapi.dto.user.UserResponse;
 import com.rizalamar.minibankingapi.repository.UserRepository;
-import com.rizalamar.minibankingapi.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

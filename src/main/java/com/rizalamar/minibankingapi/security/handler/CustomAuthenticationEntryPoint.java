@@ -1,4 +1,4 @@
-package com.rizalamar.minibankingapi.security;
+package com.rizalamar.minibankingapi.security.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

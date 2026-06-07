@@ -1,6 +1,6 @@
 package com.rizalamar.minibankingapi.config;
 
-import com.rizalamar.minibankingapi.security.CurrentUserArgumentResolver;
+import com.rizalamar.minibankingapi.security.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -11,7 +11,7 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
-    private final CurrentUserArgumentResolver currentUserArgumentResolver;
+    private final JwtUtil.CurrentUserArgumentResolver currentUserArgumentResolver;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
