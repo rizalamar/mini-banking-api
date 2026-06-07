@@ -1,7 +1,6 @@
 package com.rizalamar.minibankingapi.dto.account;
 
 import com.rizalamar.minibankingapi.domain.AccountType;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 public class CreateAccountRequest {
-    @NotBlank(message = "Account type is required")
+    @NotNull(message = "Account type is required")
     private AccountType accountType;
 
     @NotNull(message = "Initial deposit is required")
