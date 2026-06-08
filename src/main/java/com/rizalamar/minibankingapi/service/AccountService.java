@@ -7,11 +7,14 @@ import com.rizalamar.minibankingapi.dto.account.AccountResponse;
 import com.rizalamar.minibankingapi.dto.account.CreateAccountRequest;
 import com.rizalamar.minibankingapi.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +43,13 @@ public class AccountService {
         return accountRepository.findAllByUser(currentUser).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public AccountResponse getDetailAccount(User user, String accountNumber){
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+        return mapToResponse(account);
     }
 
     private String generateUniqueAccountNumber(){

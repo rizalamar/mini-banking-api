@@ -43,7 +43,22 @@ public class AccountController {
                 .code(HttpStatus.OK.value())
                 .status("OK")
                 .data(myAccounts)
-                .message("Accounts retrueve successfully")
+                .message("Accounts retrieve successfully")
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @GetMapping("/{accountNumber}")
+    public WebResponse<AccountResponse> getDetailAccount(
+            @CurrentUser User user,
+            @PathVariable("accountNumber") String accountNumber
+    ){
+        AccountResponse detailAccountResponse = accountService.getDetailAccount(user, accountNumber);
+        return WebResponse.<AccountResponse>builder()
+                .code(HttpStatus.OK.value())
+                .status("OK")
+                .data(detailAccountResponse)
+                .message("Detail account retrieve successful")
                 .timestamp(LocalDateTime.now())
                 .build();
     }
