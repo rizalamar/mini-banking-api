@@ -28,6 +28,9 @@ public class TransactionService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This account does not belong to you");
         }
 
+        account.setBalance(account.getBalance().add(request.getAmount()));
+        accountRepository.save(account);
+
         Transaction transaction = Transaction.builder()
                 .account(account)
                 .amount(request.getAmount())

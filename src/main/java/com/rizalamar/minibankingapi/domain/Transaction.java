@@ -22,7 +22,7 @@ public class Transaction extends AbstractAuditingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
-    
+
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
