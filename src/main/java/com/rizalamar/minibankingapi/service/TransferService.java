@@ -22,14 +22,14 @@ public class TransferService {
 
     @Transactional
     public TransferResponse transfer(User user, TransferRequest request){
-        Account senderAccount = accountRepository.findByAccountNumber(request.getFromAccountNumber())
+        Account senderAccount = accountRepository.findByAccountNumberForUpdate(request.getFromAccountNumber())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sender account not found"));
 
         if(!senderAccount.getUser().getId().equals(user.getId())){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
 
-        Account receiverAccount = accountRepository.findByAccountNumber(request.getToAccountNumber())
+        Account receiverAccount = accountRepository.findByAccountNumberForUpdate(request.getToAccountNumber())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Receiver account not found"));
 
         if(senderAccount.getAccountNumber().equals(receiverAccount.getAccountNumber())){
