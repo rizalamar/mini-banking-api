@@ -62,4 +62,18 @@ public class AccountController {
                 .timestamp(LocalDateTime.now())
                 .build();
     }
+
+    @GetMapping("/verify/{accountNumber}")
+    public WebResponse<String> verifyRecipient(
+            @PathVariable("accountNumber") String accountNumber
+    ) {
+        String accountOwnerName = accountService.getAccountOwnerName(accountNumber);
+        return WebResponse.<String>builder()
+                .code(HttpStatus.OK.value())
+                .status("OK")
+                .data(accountOwnerName)
+                .message("Recipient verified")
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
 }

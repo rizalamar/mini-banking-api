@@ -57,6 +57,15 @@ public class AccountService {
         return mapToResponse(account);
     }
 
+    @Transactional(readOnly = true)
+    public String getAccountOwnerName(String accountNumber){
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Account number not found"));
+
+        return account.getUser().getFullName();
+    }
+
     private String generateUniqueAccountNumber(){
         String number;
         do{
