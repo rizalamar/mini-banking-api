@@ -5,6 +5,7 @@ import com.rizalamar.minibankingapi.domain.Transaction;
 import com.rizalamar.minibankingapi.domain.TransactionType;
 import com.rizalamar.minibankingapi.domain.User;
 import com.rizalamar.minibankingapi.dto.transfer.TransferRequest;
+import com.rizalamar.minibankingapi.dto.transfer.TransferResponse;
 import com.rizalamar.minibankingapi.repository.AccountRepository;
 import com.rizalamar.minibankingapi.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class TransferService {
     private final TransactionRepository transactionRepository;
 
     @Transactional
-    public void transfer(User user, TransferRequest request){
+    public TransferResponse transfer(User user, TransferRequest request){
         Account senderAccount = accountRepository.findByAccountNumber(request.getFromAccountNumber())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sender account not found"));
 
@@ -51,6 +52,7 @@ public class TransferService {
                 .transactionType(TransactionType.TRANSFER_OUT)
                 .description("Transfer to " + receiverAccount.getAccountNumber() + " - " + request.getRemark())
                 .build();
+        Transaction savedDebit = transactionRepository.save(debit);
 
         Transaction credit = Transaction.builder()
                 .account(receiverAccount)
@@ -58,8 +60,15 @@ public class TransferService {
                 .transactionType(TransactionType.TRANSFER_IN)
                 .description("Transfer from " + senderAccount.getAccountNumber() + " - " + request.getRemark())
                 .build();
-
-        transactionRepository.save(debit);
         transactionRepository.save(credit);
+
+        return TransferResponse.builder()
+                .transactionId(savedDebit.getId().toString())
+                .fromAccountNumber(senderAccount.getAccountNumber())
+                .toAccountNumber(request.getToAccountNumber())
+                .amount(request.getAmount())
+                .remark(request.getRemark())
+                .timestamp(savedDebit.getCreatedAt())
+                .build();
     }
 }
