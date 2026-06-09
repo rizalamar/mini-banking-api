@@ -49,6 +49,11 @@ public class AccountService {
     public AccountResponse getDetailAccount(User user, String accountNumber){
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+
+        if(!account.getUser().getId().equals(user.getId())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
+        }
+
         return mapToResponse(account);
     }
 
