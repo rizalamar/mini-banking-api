@@ -5,9 +5,14 @@ import com.rizalamar.minibankingapi.domain.Transaction;
 import com.rizalamar.minibankingapi.domain.TransactionType;
 import com.rizalamar.minibankingapi.domain.User;
 import com.rizalamar.minibankingapi.dto.transaction.TransactionRequest;
+import com.rizalamar.minibankingapi.dto.transaction.TransactionResponse;
 import com.rizalamar.minibankingapi.repository.AccountRepository;
 import com.rizalamar.minibankingapi.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,5 +71,32 @@ public class TransactionService {
 
         transactionRepository.save(transaction);
 
+    }
+
+    @Transactional(readOnly = true)
+    public Page<TransactionResponse> getMutation(
+            User user,
+            String accountNumber,
+            int page,
+            int size
+    ){
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+
+        if(!account.getUser().getId().equals(user.getId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Access Denied");
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        Page<Transaction> transactions = transactionRepository.findAllByAccount(account, pageable);
+
+        return transactions.map(transaction -> TransactionResponse.builder()
+                .id(transaction.getId())
+                .amount(transaction.getAmount())
+                .transactionType(transaction.getTransactionType())
+                .description(transaction.getDescription())
+                .createdAt(transaction.getCreatedAt())
+                .build());
     }
 }
